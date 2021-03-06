@@ -1,4 +1,3 @@
-
 import java.io.*;
 import java.lang.Runtime;
 
@@ -10,21 +9,18 @@ public class Proc
       {            
 	 int x;
 	 Runtime rt = Runtime.getRuntime();
+    String src = "C:\\Users\\ariel\\Documents\\SE4348OS\\Project1\\src";
 
-	 Process proc = rt.exec("java Hello");
-	 //Process proc = rt.exec("cat hello.java");
-
-	 InputStream is = proc.getInputStream();
-	 OutputStream os = proc.getOutputStream();
-         System.out.println(is.available());
+	 Process procComp = rt.exec("javac -cp " + src + " " + src + "\\Hello.java");
+    Process procRun = rt.exec("java -cp " + src + " " + "Hello");
+	 InputStream is = procRun.getInputStream();
+	 OutputStream os = procRun.getOutputStream();
+    System.out.println(is.available());
 	 while ((x=is.read()) != -1)
 	    System.out.println((char)x); 
 	      
-	 proc.waitFor();
-
-         int exitVal = proc.exitValue();
-
-         System.out.println("Process exited: " + exitVal);
+	 procRun.waitFor();
+         System.out.println("procRun exited: " + procRun.exitValue());
 
       } 
       catch (Throwable t)
