@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Memory {
 
     static int[] dataStorage = new int[2000]; //Array of integer for data storage
@@ -24,17 +26,32 @@ public class Memory {
     }
     
     public static void main(String args[]) throws Exception{
-        if (args.length != 1){
-            throw new IllegalArgumentException();
+        String[] arg = new String[3];
+        Scanner is = new Scanner(System.in);
+        
+        while(true){
+            String inputLine = is.nextLine();
+            Scanner param = new Scanner(inputLine);
+
+            for (int i = 0; i < 3; i++) {
+                if (param.hasNext()) {
+                    arg[i] = param.next();
+                }
+            }
+            try{
+                if (arg.length <= 1) {
+                    throw new IllegalArgumentException();
+                } else if (arg[0].equals("read")) {
+                    System.out.println(read(Integer.parseInt(arg[1])));
+                } else if (arg[0].equals("write")) {
+                    write(Integer.parseInt(arg[1]), Integer.parseInt(arg[2]));
+                } else {
+                    throw new IllegalArgumentException();
+                }
+            }
+            catch(Throwable t){
+                System.out.println(String.format("Exception in child process", t));
+            }
         }
-        if (args[0] == "read"){
-            System.out.println(read(Integer.parseInt(args[1])));
-        }
-        if(args[0] == "write"){
-            write(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
-        }
-        else{
-            throw new IllegalArgumentException();
-        }
-    }
+    }   
 }

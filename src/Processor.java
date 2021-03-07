@@ -4,25 +4,37 @@ import java.lang.Runtime;
 
 public class Processor 
 {
-   public static void main(String args[]){
+   /*
+   PC = Program Counter
+   SP = Stack Pointer
+   IR = Instruction Register
+   AC = Accumulator
+   X
+   Y
+   */
+
+   public static void main(String args[]) throws Exception{
 
       try{
          String src = System.getProperty("user.dir");
-         System.out.println("javac -cp " + src + " " + "\'Memory.java");
          Process memoryComp = Runtime.getRuntime().exec("javac -cp " + src + " " + src + "\\Memory.java");
+         System.out.println(memoryComp.waitFor());
+
+         Process memoryRun = Runtime.getRuntime().exec("java -cp " + src + " " + "Memory");
+         
+         InputStream is = memoryRun.getInputStream();
+         PrintWriter pw = new PrintWriter(memoryRun.getOutputStream());
          Scanner input = new Scanner(System.in);
-         String command;
-         int x;
+         Scanner outputChild = new Scanner(is);
 
          while(true){
-            System.out.println("Enter command for memory: ");
-            command = input.nextLine();
+            System.out.println("Print command for memory process: ");
+            pw.printf(input.nextLine() + "\n");
+            pw.flush();
 
-            Process memoryRun = Runtime.getRuntime().exec("java -cp " + src + " " + "Memory " + command);
-            BufferedReader is = new BufferedReader(new InputStreamReader(memoryRun.getInputStream()));
-
-            System.out.println(is.readLine());
+            System.out.println(outputChild.nextLine());
          }
+         
       }
       catch(Throwable t){
          t.printStackTrace();
