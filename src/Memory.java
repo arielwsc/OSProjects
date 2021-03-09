@@ -4,24 +4,28 @@ public class Memory {
 
     static int[] dataStorage = new int[2000]; //Array of integer for data storage
         //0-999 - User program
-        //1000-199 kernel use
+        //1000-1999 kernel use
 
     public static int read(int address) throws Exception{
-        if (address >= 0 && address <= 999){
+        if (address >= 0 && address <= 1999){
             return dataStorage[address];
         }
         else{
-            throw new Exception("User does not have permission to access Kernel mode");
+            throw new Exception("Error reading from memory\n");
         }
     }
 
     public static void write(int address, int data) throws Exception{
         if (address >= 0 && address <= 999){
             dataStorage[address] = data;
-            System.out.println("Saved into memory");
+            System.out.print("Saved into " + address + " user memory: " + data + "\n");
+        }
+        else if(address >= 1000 && address <= dataStorage.length - 1){
+            dataStorage[address] = data;
+            System.out.print("Saved into " + address + " system memory: " + data + "\n");
         }
         else{
-            throw new Exception("User does not have permission to access Kernel mode");
+            throw new Exception("Error writing to memory\n");
         }
     }
     
@@ -42,7 +46,7 @@ public class Memory {
                 if (arg.length <= 1) {
                     throw new IllegalArgumentException();
                 } else if (arg[0].equals("read")) {
-                    System.out.println(read(Integer.parseInt(arg[1])));
+                    System.out.print(read(Integer.parseInt(arg[1])));
                 } else if (arg[0].equals("write")) {
                     write(Integer.parseInt(arg[1]), Integer.parseInt(arg[2]));
                 } else {
@@ -50,7 +54,7 @@ public class Memory {
                 }
             }
             catch(Throwable t){
-                System.out.println(String.format("Exception in child process", t));
+                System.out.println(t.getMessage()+"\n");
             }
         }
     }   
