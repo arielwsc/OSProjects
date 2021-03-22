@@ -15,12 +15,12 @@ The project has been implemented in a higher language where simulate how a CPU w
 
 ![alt text](https://github.com/arielwsc/OSProjects/blob/master/Proc_Instr_Set.JPG?raw=true)
 
-# Files
+## Files
 Memory.java : This file contains the memory process and its partions.
 Processor.java : This file contains the processor process and all its logic including the register
 instructions and the forking of the Memory process
 
-# Execution
+## Execution
 Cmd compilation: "javac Processor.java"
 Cmd run: `java Processor <source file> <timer>`, where `<source file>` is the file that has the processor
 instructions to be fetched into memory and `<timer>` is the timer in int format for processing interruption.
