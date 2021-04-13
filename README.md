@@ -21,7 +21,7 @@ Processor.java : This file contains the processor process and all its logic incl
 instructions and the forking of the Memory process
 
 ## Execution
-Cmd compilation: "javac Processor.java"
+Cmd compilation: `javac Processor.java`
 Cmd run: `java Processor <source file> <timer>`, where `<source file>` is the file that has the processor
 instructions to be fetched into memory and `<timer>` is the timer in int format for processing interruption.
 E.g., `java Processor sample1.txt 500`
